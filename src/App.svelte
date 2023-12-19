@@ -4,7 +4,7 @@
 
     let snake: number[][];
     let direction: [number, number];
-    // let food: [number, number];
+    let food: [number, number];
     let intervalID: number | undefined;
     // let gameOver = false;
     // let score = 0;
@@ -20,6 +20,7 @@
             [0, 0],
         ];
         direction = [1, 0];
+        food = pickRandomFreePosition();
         // gameOver = false;
     }
 
@@ -32,22 +33,31 @@
         // calculate next head position
         const [nextX, nextY] = [headX + directionX, headY + directionY];
 
-        if(
-            nextX<0 ||
-            nextX>= boardWidth ||
-            nextY <0 ||
-            nextY>= boardHeight ||
+        if (
+            nextX < 0 ||
+            nextX >= boardWidth ||
+            nextY < 0 ||
+            nextY >= boardHeight ||
             snake.find(
-                ([snakeX, snakeY]) => snakeX === nextX && snakeY === naxtY,
+                ([snakeX, snakeY]) => snakeX === nextX && snakeY === nextY,
             )
         ) {
+            // stop update interval
             clearInterval(intervalID);
             console.log("game over");
             return;
         }
+
         snake.unshift([nextX, nextY]);
 
-        snake.pop();
+        // check if collecting food
+        if (nextX === food[0] && nextY === food[1]) {
+            // score += 1;
+            food = pickRandomFreePosition();
+        } else {
+            // remove tail to keep the same snake length if food was not collected
+            snake.pop();
+        }
 
         // update snake to trigger reactivity (rendering)
         snake = snake;
@@ -76,7 +86,18 @@
     }
 
     function pickRandomFreePosition(): [number, number] {
-        let randomX: number, randomY: number
+        let randomX: number, randomY: number;
+        do {
+            [randomX, randomY] = [
+                Math.floor(Math.random() * boardWidth),
+                Math.floor(Math.random() * boardHeight),
+            ];
+        } while (
+            snake.find(
+                ([snakeX, snakeY]) => snakeX === randomX && snakeY === randomY,
+            )
+        );
+        return [randomX, randomY];
     }
 
     intervalID = setInterval(update, intervalTimeout);
@@ -92,7 +113,8 @@
                 <!-- [{x}, {y}] -->
                 <div
                     class="cell
-                {snake.find(([sx, sy]) => sx === x && sy === y) ? 'snake' : ''} 
+                {snake.find(([sx, sy]) => sx === x && sy === y) ? 'snake' : ''}
+                {food[0] === x && food[1] === y ? 'food' : ''} 
                 "
                 ></div>
             {/each}
@@ -114,5 +136,8 @@
     }
     .snake {
         background-color: slateblue;
+    }
+    .food {
+        background-color: red;
     }
 </style>
