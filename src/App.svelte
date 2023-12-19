@@ -42,7 +42,7 @@
             )
         ) {
             clearInterval(intervalID);
-
+            console.log("game over");
             return;
         }
         snake.unshift([nextX, nextY]);
@@ -73,6 +73,10 @@
                 if (snake[0][0] - snake[1][0] !== -1) direction = [1, 0];
                 break;
         }
+    }
+
+    function pickRandomFreePosition(): [number, number] {
+        let randomX: number, randomY: number
     }
 
     intervalID = setInterval(update, intervalTimeout);
