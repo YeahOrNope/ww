@@ -32,6 +32,19 @@
         // calculate next head position
         const [nextX, nextY] = [headX + directionX, headY + directionY];
 
+        if(
+            nextX<0 ||
+            nextX>= boardWidth ||
+            nextY <0 ||
+            nextY>= boardHeight ||
+            snake.find(
+                ([snakeX, snakeY]) => snakeX === nextX && snakeY === naxtY,
+            )
+        ) {
+            clearInterval(intervalID);
+
+            return;
+        }
         snake.unshift([nextX, nextY]);
 
         snake.pop();
@@ -62,7 +75,7 @@
         }
     }
 
-    setInterval(update, intervalTimeout);
+    intervalID = setInterval(update, intervalTimeout);
 </script>
 
 <!-- globally capture keydown events -->
