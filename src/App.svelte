@@ -8,6 +8,7 @@
     let intervalID: number | undefined;
     let gameOver = false;
     let score = 0;
+    let highScore = 0;
 
     // interval between each update in [ms]
     let intervalTimeout = 150;
@@ -55,8 +56,8 @@
             score += 1;
             if (snake.length == boardWidth * boardHeight) {
                 clearInterval(intervalID);
-                console.log("you von");
-                
+                console.log("you won");
+
             }
             food = pickRandomFreePosition();
         } else {
