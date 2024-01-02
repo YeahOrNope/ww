@@ -8,10 +8,16 @@
     let intervalID: number | undefined;
     let gameOver = false;
     let score = 0;
-    let highScore = 0;
+    let highScore = getHighscore();
 
     // interval between each update in [ms]
     let intervalTimeout = 150;
+
+    function getHighScore(){
+        const highScore = localStorage.getItem(highScore);
+        if highScore return parseInt(highScore);
+        return 0;
+    }
 
     function setup() {
         score = 0;
