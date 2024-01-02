@@ -7,13 +7,13 @@
     let food: [number, number];
     let intervalID: number | undefined;
     // let gameOver = false;
-    // let score = 0;
+    let score = 0;
 
     // interval between each update in [ms]
     let intervalTimeout = 150;
 
     function setup() {
-        // score = 0;
+        score = 0;
         snake = [
             [2, 0],
             [1, 0],
@@ -52,7 +52,7 @@
 
         // check if collecting food
         if (nextX === food[0] && nextY === food[1]) {
-            // score += 1;
+            score += 1;
             food = pickRandomFreePosition();
         } else {
             // remove tail to keep the same snake length if food was not collected
@@ -139,5 +139,8 @@
     }
     .food {
         background-color: red;
+    }
+    .score {
+        
     }
 </style>
