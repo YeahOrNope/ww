@@ -6,7 +6,7 @@
     let direction: [number, number];
     let food: [number, number];
     let intervalID: number | undefined;
-    // let gameOver = false;
+    let gameOver = false;
     let score = 0;
 
     // interval between each update in [ms]
@@ -141,6 +141,7 @@
         background-color: red;
     }
     .score {
-        
+        font-size: 2rem;
+        font-family: 
     }
 </style>
