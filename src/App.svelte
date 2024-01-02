@@ -67,6 +67,7 @@
             // stop update interval
             clearInterval(intervalID);
             console.log("game over");
+            gameOver = True;
             setHighScore();
             return;
         }
@@ -82,6 +83,7 @@
                 console.log("you won");
                 snake = snake;
                 setHighScore();
+                gameOver = True;
                 return;
             }
             food = pickRandomFreePosition();
