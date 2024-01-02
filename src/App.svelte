@@ -14,8 +14,8 @@
     let intervalTimeout = 150;
 
     function getHighScore(){
-        const highScore = localStorage.getItem(highScore);
-        if highScore return parseInt(highScore);
+        const value = localStorage.getItem(value);
+        if value return parseInt(value);
         return 0;
     }
 
