@@ -44,9 +44,9 @@
         direction = [1, 0];
         food = pickRandomFreePosition();
         gameOver = false;
+        intervalID = setInterval(update, intervalTimeout);
     }
 
-    setup();
 
     function update() {
         const [headX, headY] = snake[0];
@@ -133,7 +133,7 @@
         return [randomX, randomY];
     }
 
-    intervalID = setInterval(update, intervalTimeout);
+    setup();
 </script>
 
 <!-- globally capture keydown events -->
@@ -159,6 +159,8 @@
             {/each}
         </div>
     {/each}
+    {#if gameOver}
+        <button
 </main>
 
 <style>
