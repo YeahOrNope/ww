@@ -16,8 +16,8 @@
     const HIGH_SCORE_KEY = "highScore";
 
     function getHighScore(){
-        const value = localStorage.getItem(value);
-        if value return parseInt(value);
+        const HIGH_SCORE_KEY = localStorage.getItem(HIGH_SCORE_KEY);
+        if (HIGH_SCORE_KEY) return parseInt(HIGH_SCORE_KEY);
         return 0;
     }
 
