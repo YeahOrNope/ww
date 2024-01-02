@@ -8,22 +8,29 @@
     let intervalID: number | undefined;
     let gameOver = false;
     let score = 0;
-    let highScore = getHighscore();
+    let highScore = getHighScore();
 
     // interval between each update in [ms]
     let intervalTimeout = 150;
 
     const HIGH_SCORE_KEY = "highScore";
 
-    function getHighScore(){
-        const HIGH_SCORE_KEY = localStorage.getItem(HIGH_SCORE_KEY);
-        if (HIGH_SCORE_KEY) return parseInt(HIGH_SCORE_KEY);
+    function getHighScore() {
+        const value = localStorage.getItem(HIGH_SCORE_KEY);
+        if (value) {
+            const newHighScore = parseInt(value);
+            if (newHighScore > boardWidth * boardHeight) {
+                return -1;
+            }
+            return newHighScore;
+        }
         return 0;
     }
 
     function setHighScore() {
-        if (score > highScore){
+        if (score > highScore) {
             localStorage.setItem(HIGH_SCORE_KEY, score.toString());
+            highScore = score;
         }
     }
 
@@ -36,7 +43,7 @@
         ];
         direction = [1, 0];
         food = pickRandomFreePosition();
-        // gameOver = false;
+        gameOver = false;
     }
 
     setup();
@@ -60,6 +67,7 @@
             // stop update interval
             clearInterval(intervalID);
             console.log("game over");
+            setHighScore();
             return;
         }
 
@@ -69,9 +77,12 @@
         if (nextX === food[0] && nextY === food[1]) {
             score += 1;
             if (snake.length == boardWidth * boardHeight) {
+                // stop update interval
                 clearInterval(intervalID);
                 console.log("you won");
-
+                snake = snake;
+                setHighScore();
+                return;
             }
             food = pickRandomFreePosition();
         } else {
@@ -127,6 +138,11 @@
 <svelte:window on:keydown={handleKeydown} />
 
 <main>
+    <div class="score">
+        Score: {score}
+        High score: {highScore}
+    </div>
+
     {#each Array(boardHeight).fill(0) as _, y}
         <div class="row">
             {#each Array(boardWidth).fill(0) as _, x}
@@ -135,6 +151,7 @@
                     class="cell
                 {snake.find(([sx, sy]) => sx === x && sy === y) ? 'snake' : ''}
                 {food[0] === x && food[1] === y ? 'food' : ''} 
+                {snake[0][0] === x && snake[0][1] === y ? 'head' : ''} 
                 "
                 ></div>
             {/each}
@@ -146,6 +163,7 @@
     .row {
         display: flex;
     }
+
     .cell {
         width: 40px;
         height: 40px;
@@ -154,14 +172,23 @@
         background-color: greenyellow;
         margin: 1px;
     }
+
     .snake {
         background-color: slateblue;
     }
+
+    .head {
+        background-color: blue;
+    }
+
     .food {
         background-color: red;
     }
+
     .score {
         font-size: 2rem;
-        font-family: 
+        font-family: Futura, sans-serif;
+        font-weight: bold;
+        color: #b4b4b4;
     }
 </style>
