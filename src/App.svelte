@@ -57,12 +57,8 @@
 
         if (
             nextX < 0 ||
-            nextX >= boardWidth ||
             nextY < 0 ||
             nextY >= boardHeight ||
-            snake.find(
-                ([snakeX, snakeY]) => snakeX === nextX && snakeY === nextY,
-            )
         ) {
             // stop update interval
             clearInterval(intervalID);
