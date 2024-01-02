@@ -22,7 +22,9 @@
     }
 
     function setHighScore() {
-        localStorage.setItem(HIGH_SCORE_KEY, score.toString());
+        if (score > highScore){
+            localStorage.setItem(HIGH_SCORE_KEY, score.toString());
+        }
     }
 
     function setup() {
