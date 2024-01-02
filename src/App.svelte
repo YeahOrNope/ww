@@ -13,10 +13,16 @@
     // interval between each update in [ms]
     let intervalTimeout = 150;
 
+    const HIGH_SCORE_KEY = "highScore";
+
     function getHighScore(){
         const value = localStorage.getItem(value);
         if value return parseInt(value);
         return 0;
+    }
+
+    function setHighScore() {
+        localStorage.setItem(HIGH_SCORE_KEY, score.toString());
     }
 
     function setup() {
