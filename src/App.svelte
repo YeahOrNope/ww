@@ -53,6 +53,11 @@
         // check if collecting food
         if (nextX === food[0] && nextY === food[1]) {
             score += 1;
+            if (snake.length == boardWidth * boardHeight) {
+                clearInterval(intervalID);
+                console.log("you von");
+                
+            }
             food = pickRandomFreePosition();
         } else {
             // remove tail to keep the same snake length if food was not collected
